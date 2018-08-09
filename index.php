@@ -1,17 +1,14 @@
 <?php 
-$url = parse_url(getenv("DATABASE_URL"));
-$server = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$db = substr($url["path"], 1);
+ini_set('display_errors', '1');
+error_reporting(E_ALL | E_STRICT);
 
-$config = array(
-    'host' => $server ,
-    'user' => $username ,
-    'pw' => $password,
-    'db' => $db 
-);
 
-//echo 'sdfsdf';
-//phpinfo();
+try {
+	$dbconn = pg_connect("host=ec2-50-17-250-38.compute-1.amazonaws.com dbname=dagf0bv08qg31m user=bwmefqhjvqwzac password=dac52067712ba647f1fa711e9efcbd5b46db73a7fd1e19a3215bf6136088362f");
+	echo 'db is connected';
+}
+catch (PDOException $e) {
+	echo "Error : " . $e->getMessage() . "<br/>";
+	die();
+}
 ?>
