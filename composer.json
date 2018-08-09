@@ -1,9 +1,6 @@
 {
   "require": {
-    "ext-mysql": "*",
-     "php": ">=7.2.*"	
-  },
-   "require": {
-      "ext-gettext": "*"
-    }
+    "php": ">=7.2.*",	
+    "ext-mysql": "*"	
+  }
 }
