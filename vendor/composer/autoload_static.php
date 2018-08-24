@@ -6,9 +6,25 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit1ab612b56fb1dc6545a00802b6e3e858
 {
+    public static $prefixLengthsPsr4 = array (
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1ab612b56fb1dc6545a00802b6e3e858::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1ab612b56fb1dc6545a00802b6e3e858::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

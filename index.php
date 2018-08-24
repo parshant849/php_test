@@ -29,10 +29,12 @@ if(getenv("ENVIRONMENT") !='prod'){
    $db = pg_connect( "$host $port $dbname $cred"  );
    if(!$db) {
       echo "Unable to connect with db";
+   	  $return = pg_query($db, "CREATE TABLE IF NOT EXISTS test (id INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL);");
+
    } else {
       echo "Connected with db";
 
-   $return = pg_query($db, "SELECT * from test_table");
+   $return = pg_query($db, "SELECT * from test");
    if(!$return) {
       echo pg_last_error($db);
       exit;
