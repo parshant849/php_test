@@ -1,14 +1,51 @@
 <?php 
+
 ini_set('display_errors', '1');
 error_reporting(E_ALL | E_STRICT);
 
+require __DIR__ . '/vendor/autoload.php';
+use \Dotenv\Dotenv;
 
-try {
-	$dbconn = pg_connect("host=ec2-50-17-250-38.compute-1.amazonaws.com dbname=dagf0bv08qg31m user=bwmefqhjvqwzac password=dac52067712ba647f1fa711e9efcbd5b46db73a7fd1e19a3215bf6136088362f");
-	echo 'db is connected';
+echo"hello";
+
+if(getenv("ENVIRONMENT") !='prod'){
+	$dotenv = new Dotenv(__DIR__);
+	$dotenv->load();
 }
-catch (PDOException $e) {
+
+ try{
+  $url = parse_url(getenv("DATABASE_URL"));
+  $host =  $url["host"];
+  $username = $url["user"];
+  $password = $url["pass"];
+  $port = $url["port"];
+  $database = substr($url["path"], 1);
+	
+   $host        = "host = $host ";
+   $port        = "port = $port";
+   $dbname      = "dbname = $database";
+   $cred = "user = $username password=$password";
+
+   $db = pg_connect( "$host $port $dbname $cred"  );
+   if(!$db) {
+      echo "Unable to connect with db";
+   } else {
+      echo "Connected with db";
+
+   $return = pg_query($db, "SELECT * from test_table");
+   if(!$return) {
+      echo pg_last_error($db);
+      exit;
+   } 
+   while($row = pg_fetch_row($return)) {
+     echo"<pre>"; print_r($row[0]);
+   }
+   echo " query executed successfully<br>";
+  }
+} catch (PDOException $e) {
 	echo "Error : " . $e->getMessage() . "<br/>";
 	die();
 }
+
 ?>
+
